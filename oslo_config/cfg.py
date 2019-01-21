@@ -27,6 +27,7 @@ import logging
 import os
 import string
 import sys
+from typing import Any, Callable, List, Pattern, Sequence, Tuple, Union  # noqa
 
 import enum
 import six
@@ -905,6 +906,7 @@ class StrOpt(Opt):
 
     def __init__(self, name, choices=None, quotes=None,
                  regex=None, ignore_case=False, max_length=None, **kwargs):
+        # type: (str, Sequence[Union[str, Tuple[str, str]]], bool, Union[str, Pattern], bool, int, Any) -> None # noqa
         super(StrOpt, self).__init__(name,
                                      type=types.String(
                                          choices=choices,
@@ -951,6 +953,7 @@ class BoolOpt(Opt):
     """
 
     def __init__(self, name, **kwargs):
+        # type: (str, Any) -> None
         if 'positional' in kwargs:
             raise ValueError('positional boolean args not supported')
         super(BoolOpt, self).__init__(name, type=types.Boolean(), **kwargs)
@@ -1011,6 +1014,7 @@ class IntOpt(Opt):
     """
 
     def __init__(self, name, min=None, max=None, **kwargs):
+        # type: (str, int, int, Any) -> None
         super(IntOpt, self).__init__(name, type=types.Integer(min, max),
                                      **kwargs)
 
@@ -1032,6 +1036,7 @@ class FloatOpt(Opt):
     """
 
     def __init__(self, name, min=None, max=None, **kwargs):
+        # type: (str, float, float, Any) -> None
         super(FloatOpt, self).__init__(name, type=types.Float(min, max),
                                        **kwargs)
 
@@ -1052,6 +1057,7 @@ class ListOpt(Opt):
     """
 
     def __init__(self, name, item_type=None, bounds=None, **kwargs):
+        # type: (str, types.ConfigType, bool, Any) -> None
         super(ListOpt, self).__init__(name,
                                       type=types.List(item_type=item_type,
                                                       bounds=bounds),
@@ -1071,6 +1077,7 @@ class DictOpt(Opt):
     """
 
     def __init__(self, name, **kwargs):
+        # type: (str, Any) -> None
         super(DictOpt, self).__init__(name, type=types.Dict(), **kwargs)
 
 
@@ -1089,6 +1096,7 @@ class IPOpt(Opt):
     """
 
     def __init__(self, name, version=None, **kwargs):
+        # type: (str, int, Any) -> None
         super(IPOpt, self).__init__(name, type=types.IPAddress(version),
                                     **kwargs)
 
@@ -1119,6 +1127,7 @@ class PortOpt(Opt):
     """
 
     def __init__(self, name, min=None, max=None, choices=None, **kwargs):
+        # type: (str, int, int, Sequence[Union[int, Tuple[int,int]]], Any) -> None
         type = types.Port(min=min, max=max, choices=choices,
                           type_name='port value')
         super(PortOpt, self).__init__(name, type=type, **kwargs)
@@ -1137,6 +1146,7 @@ class HostnameOpt(Opt):
     """
 
     def __init__(self, name, **kwargs):
+        # type: (str, Any) -> None
         super(HostnameOpt, self).__init__(name, type=types.Hostname(),
                                           **kwargs)
 
@@ -1158,6 +1168,7 @@ class HostAddressOpt(Opt):
     """
 
     def __init__(self, name, version=None, **kwargs):
+        # type: (str, int, Any) -> None
         super(HostAddressOpt, self).__init__(name,
                                              type=types.HostAddress(version),
                                              **kwargs)
@@ -1184,6 +1195,7 @@ class URIOpt(Opt):
     """
 
     def __init__(self, name, max_length=None, schemes=None, **kwargs):
+        # type: (str, int, List[str], Any) -> None
         type = types.URI(max_length=max_length, schemes=schemes)
         super(URIOpt, self).__init__(name, type=type, **kwargs)
 
@@ -1214,6 +1226,7 @@ class MultiOpt(Opt):
     multi = True
 
     def __init__(self, name, item_type, **kwargs):
+        # type: (str, types.ConfigType, Any) -> None
         super(MultiOpt, self).__init__(name, item_type, **kwargs)
 
     def _get_argparse_kwargs(self, group, **kwargs):
@@ -1238,6 +1251,7 @@ class MultiStrOpt(MultiOpt):
     """
 
     def __init__(self, name, **kwargs):
+        # type: (str, Any) -> None
         super(MultiStrOpt, self).__init__(name,
                                           item_type=types.MultiString(),
                                           **kwargs)
@@ -1268,6 +1282,7 @@ class SubCommandOpt(Opt):
 
     def __init__(self, name, dest=None, handler=None,
                  title=None, description=None, help=None):
+        # type: (str, str, Callable, str, str, str) -> None
         """Construct an sub-command parsing option.
 
         This behaves similarly to other Opt sub-classes but adds a
