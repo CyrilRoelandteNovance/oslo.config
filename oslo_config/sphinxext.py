@@ -10,6 +10,8 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+from typing import Any, Dict
+
 from docutils import nodes
 from docutils.parsers import rst
 from docutils.parsers.rst import directives
@@ -470,7 +472,7 @@ class ConfigDomain(Domain):
     initial_data = {
         'options': {},
         'groups': {},
-    }
+    }  # type: Dict[str, Dict[Any, Any]]
 
     def resolve_xref(self, env, fromdocname, builder,
                      typ, target, node, contnode):

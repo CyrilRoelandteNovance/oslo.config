@@ -22,6 +22,7 @@ Use these classes as values for the `type` argument to
 import collections
 import operator
 import re
+from typing import Any
 import warnings
 
 import abc
@@ -37,7 +38,7 @@ class ConfigType(object):
     def __init__(self, type_name='unknown type'):
         self.type_name = type_name
 
-    NONE_DEFAULT = '<None>'
+    NONE_DEFAULT = '<None>'  # type: Any
 
     def format_defaults(self, default, sample_default=None):
         """Return a list of formatted default values.
@@ -907,15 +908,19 @@ class URI(ConfigType):
         self._value = value
         return value
 
+    # NOTE(croelandt):  using "removals.removed_property" instead of "property"
+    # leads mypy to believe that the "value" method is defined multiple times.
+    # Just ignore the error for now. It will no longer be an issue once
+    # self.value has been removed.
     @removals.removed_property
     def value(self):
         return self._value
 
-    @value.setter
+    @value.setter  # type: ignore
     def value(self, newval):
         self._value = newval
 
-    @value.deleter
+    @value.deleter  # type: ignore
     def value(self):
         del self._value
 
